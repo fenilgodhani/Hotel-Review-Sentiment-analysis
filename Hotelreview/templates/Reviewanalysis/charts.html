@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Bootstrap Example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+		<style type="text/css">
+		
+		</style>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		{% load staticfiles %}
+		<link href="{% static 'css/pagination.css' %}" rel="stylesheet">
+		<!-- Bootstrap core CSS -->
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/mystyle.css' %}" rel="stylesheet">
+		<!-- Your custom styles (optional) -->
+		<!-- SCRIPTS -->
+		<!-- JQuery -->
+		<script type="text/javascript" src="{%static 'js/jquery-3.3.1.min.js' %}"></script>
+		<!-- Bootstrap tooltips -->
+		<script type="text/javascript" src="{%static 'js/popper.min.js' %}"></script>
+		<!-- Bootstrap core JavaScript -->
+		<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+		<!-- MDB core JavaScript -->
+		<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+		
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+		
+		<script type="text/javascript" src="https://www.solodev.com/assets/pagination/jquery.twbsPagination.js"></script>
+		
+	</head>
+<body class="hello">
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<span style="background-color: #4DA356;color: #ffffff;font-size:30px;border: 2px solid #414F47;border-radius:5px;padding: 2px">4.6</span>
+			<span class="mydiv" ><strong>Fabulous.</strong></span>
+			<span style="color: #212DBD">651 reviews</span>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<br>
+<div class="row">
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-8">
+			<h2 style="color:#800000"><strong>Hyatt Regency Ahmedabad</strong></h2>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+<br>	
+<div class="row">
+	<div class="col-sm-4">
+
+	</div>
+	<div class="col-sm-4">
+		<center>
+		<h2 style="color: #4DA356;"><strong>Over all Review Analysis:</strong></h2>
+		</center>
+	</div>
+	<div class="col-sm-4"></div>
+</div>  
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-2 align-self-center">
+		<center>
+		<span style='font-size:100px'>&#128578;</span>
+		</center>
+	</div>
+	<div class="col-sm-4">
+		<div id="piechart"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Neutral', 1],
+  ['Negative', 2],
+  ['Positive', 3],
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Hotel Review Analysis', 'width':550, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+	</div>
+	<div class="col-sm-4"></div>
+</div>
+
+<div class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4">
+		<center>
+		<h2 style="color: #4DA356;" class="nobr"><strong>More General Review Analysis:</strong></h2>
+		</center>
+	</div>
+	<div class="col-sm-4"></div>
+</div>  
+<br>
+<div class="row">
+  	<div class="col-sm-2"></div>
+  	<div class="col-sm-8 p-0">
+       <canvas id="horizontalBar"></canvas>
+    </div> 
+  
+</div>
+<br>
+<br>
+<br>
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-8">
+		<h4 style="color: #4DA356"><strong>Select a topic to search reviews:</strong></h4>
+	</div>
+	<div class="col-sm-2"></div>
+</div>
+<div class="row">
+	
+	<div class="col-sm-2"></div>
+	
+	<div class="col-sm-8 p-0">
+		<form>
+			<div class="container">
+				<div class="row">
+				
+<div class="col-sm-6">
+	<select class="js-example-basic-multiple custom-select" id="selec"name="states[]" multiple="multiple">
+			<option value="staff">Staff</option>
+			<option value="cleanliness">Cleanliness</option>
+			<option value="bathroom">Bathroom</option>
+			<option value="location">Location</option>
+			<option value="room">Room</option>
+			<option value="spa_gym">Gym</option>
+			<option value="food">Food</option>
+			<option value="service">Service</option>
+	</select>
+</div>
+</div>
+</div>
+</form>
+	</div>
+	<div class="col-sm-2"></div>
+</div>
+<br>
+<br>
+<div class="row">
+	<!-- <div class="col-sm-2"></div>
+	<div class="col-sm-8 p-0">
+		 <div class="container">	
+	 <div class="card">
+	    <div class="card-body">
+	        <div class="row">
+        	    <div class="col-md-2">
+        	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+        	        <p class="text-secondary text-center">5 Minutes Ago</p>
+        	    </div>
+        	    <div class="col-md-10">
+        	        <p>
+        	            <strong>Syed</strong></a>
+        	            <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">4</span>
+
+        	       </p>
+        	       <div class="clearfix"></div>
+        	        <p>As always very welcoming. It's a home away from home everyone is exceptionally accommodating. When in Ahmedabad it's our first choice hotel. We've been coming for years and over the years the place has become like home.</p>
+        	    </div>
+	        </div>
+	    </div>
+	</div> 
+
+	<ul id="pagination-demo" class="pagination-lg pull-right"></ul>
+</div>
+	</div>
+	<div class="col-sm-2"></div>
+</div> -->
+<div class="row">
+	<!-- <div class="col-sm-2"></div> -->
+	<div class="col-sm-12">
+			<div class="container" id ="paginate">
+				
+					
+			 </div>
+			 <ul class="pagination-lg pull-right" id="pagination-demo"></ul>
+	</div>
+</div>
+
+</div>
+</div>
+
+
+
+<script>
+
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+
+</script>   
+<script>
+
+	$(document).ready(function(){
+		var	totalItems,totalPages =0;
+	$("#selec").on('change', function(){
+		var val = $('#selec').val();
+		val = JSON.stringify(val); 
+		console.log(val)
+		$.ajax({
+            type: "GET",
+            url: "{% url 'check_index'%}",
+						data:{opt:val},
+						success: function(data) {
+							
+                if (data) {
+									
+									totalItems =	JSON.stringify(data);
+									console.log(totalItems)
+									totalPages = parseInt(totalItems/10);
+										
+									
+			
+			console.log(totalPages)
+			// var ulele = document.createElement('UL');
+			// ulele.className = 'pagination-lg pull-right';
+			// ulele.id = "pagination-demo";
+			// console.log(ulele);
+			// document.getElementById('paginate').appendChild(ulele)
+			for(var i=0;i<3;i++)
+			{
+				console.log(totalPages)
+				var indiv = document.createElement('div');
+				indiv.className = 'jumbotron';
+				indiv.className += ' page';
+				indiv.id = `page${i+1}`;
+				document.getElementById('paginate').appendChild(indiv)
+				
+				for(var j = 0;j<10;j++){
+					var newchild = document.createElement('div');
+					newchild.innerHTML = '<div class="card"> <div class="card-body"> <div class="row"> <div class="col-md-2"> <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/> <p class="text-secondary text-center">5 Minutes Ago</p> </div> <div class="col-md-10"> <p> <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Syed</strong></a> <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">4</span> </p> <div class="clearfix"></div> <p>As always very welcoming. It is a home away from home everyone is exceptionally accommodating. When in Ahmedabad it is our first choice hotel. We have been coming for years and over the years the place has become like home.</p> </div> </div> </div></div>'
+					indiv.appendChild(newchild);
+
+				//document.getElementById(`X${i}`).innerHTML = '<div class="card"> <div class="card-body"> <div class="row"> <div class="col-md-2"> <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/> <p class="text-secondary text-center">5 Minutes Ago</p> </div> <div class="col-md-10"> <p> <strong>Syed</strong></a> <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">4</span> </p> <div class="clearfix"></div> <p>As always very welcoming. Its a home away from home everyone is exceptionally accommodating. When in Ahmedabad its our first choice hotel. Weve been coming for years and over the years the place has become like home.</p> </div> </div> </div></div>';
+				}
+				
+			}
+			
+			
+                } else {
+                    document.getElementById('X').value = "No student with this tag id found";
+                }
+
+								$('#pagination-demo').twbsPagination({
+			
+			totalPages  : totalPages ,
+			// the current page that show on start
+			startPage: 1,
+			
+			// maximum visible pages
+			visiblePages: 5,
+			
+			initiateStartPageClick: true,
+			
+			// template for pagination links
+			href: false,
+			
+			// variable name in href template for page number
+			hrefVariable: '{{number}}',
+			
+			// Text labels
+			first: 'First',
+			prev: 'Previous',
+			next: 'Next',
+			last: 'Last',
+			
+			// carousel-style pagination
+			loop: false,
+			
+			// callback function
+			onPageClick: function (event, page) {
+				 $('.page-active').removeClass('page-active');
+				$('#page'+page).addClass('page-active');
+			},
+			
+			// pagination Classes
+			paginationClass: 'pagination',
+			nextClass: 'next',
+			prevClass: 'prev',
+			lastClass: 'last',
+			firstClass: 'first',
+			pageClass: 'page',
+			activeClass: 'active',
+			disabledClass: 'disabled'
+			
+			});
+            }
+		});
+		console.log(totalPages)
+    
+});
+
+
+
+});
+
+</script>
+<!-- <script>
+
+		$(document).ready(function() {
+	
+		
+		});
+		</script> -->
+
+
+<script>
+  new Chart(document.getElementById("horizontalBar"), {
+    "type": "horizontalBar",
+    "data": {
+      "labels": ["Staff", "Cleanliness", "Price", "Location", "Room", "Bathroom","Spa & Gym","Food"],
+      "datasets": [{
+        "label": "# Rating Out Of 5",
+        "data": [1,2,3,4,5,4,3,1],
+        "fill": false,
+        "backgroundColor": ['rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        "borderColor": ['rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        "borderWidth": 1
+      }]
+    },
+    "options": {
+      "scales": {
+        "xAxes": [{
+          "ticks": {
+            "beginAtZero": true
+          }
+        }]
+      }
+    }
+  });
+
+</script>
+
+</body>
+</html>
+

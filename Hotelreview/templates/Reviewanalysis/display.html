@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Reviewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    {% load staticfiles %}
+    <link href="{% static 'css/mystyle.css' %}" rel="stylesheet">
+    <script src="{% static 'css/pagi.css' %}"></script>
+    <style>
+        .page {
+            display: none;
+        }
+
+        .page-active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <br>
+        <div class="row ">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 shadow">
+                <h3 style="color: #4DA356;"><strong>Review Analysis:</strong></h3>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row ">
+
+            <div class="col-sm-3">
+                <span
+                    style="background-color: #4DA356;color: #ffffff;font-size:30px;border: 2px solid #414F47;border-radius:5px;padding: 2px">{{dictionary.avarage_rating}}</span>
+                {% if dictionary.avarage_rating <= 5 and dictionary.avarage_rating > 4 %}
+                <span class="mydiv"><strong>Fabulous.</strong></span>
+                {% elif dictionary.avarage_rating <= 4 and dictionary.avarage_rating > 3 %}
+                <span class="mydiv"><strong>Nice.</strong></span>
+                {% elif dictionary.avarage_rating <= 3 and dictionary.avarage_rating >  2 %}
+                <span class="mydiv"><strong>Good.</strong></span>
+                {% elif dictionary.avarage_rating <= 2 and dictionary.avarage_rating > 1 %}
+                <span class="mydiv"><strong>Fair.</strong></span>
+                {% else%}
+                <span class="mydiv"><strong>Bad.</strong></span>
+                {% endif %}
+                <span style="color: #212DBD">{{dictionary.total_reviews}}Reviews available</span>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3">
+                <h4 style="color:#800000"><strong>{{dictionary.hotel_name}}</strong></h4>
+            </div>
+
+
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+                <center>
+                    <h2 style="color: #4DA356;"><strong>Over all Review Analysis:</strong></h2>
+                </center>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+                <center>
+                    <h2 style="color: #4DA356;" class="nobr"><strong>More General Review Analysis:</strong></h2>
+                </center>
+            </div>
+        </div>
+        <div class="row shadow bg-white rounded">
+            <div class="col-sm-2 ">
+                <center>
+                    <span style='font-size:100px; padding: 5px;'>&#128578;</span>
+                </center>
+            </div>
+
+            <div class="col-sm-3 ">
+                <div id="piechart"></div>
+
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+                <script type="text/javascript">
+                    // Load google charts
+                    google.charts.load('current', {
+                        'packages': ['corechart']
+                    });
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    // Draw the chart and set the chart values
+                    function drawChart() {
+                        console.log({{ dictionary.neutral_count }})
+                    var data = google.visualization.arrayToDataTable([
+                        ['Task', 'Hours per Day'],
+                        ['Neutral', {{ dictionary.neutral_count }} ],
+                    ['Negative', {{ dictionary.negative_count }}],
+                        ['Positive', {{ dictionary.positive_count }}],
+                        ]);
+
+                    // Optional; add a title and set the width and height of the chart
+                    var options = {
+                        'title': 'Hotel Review Analysis',
+                        'width': 450,
+                        'height': 450,
+                        is3D: true
+                    };
+
+                    // Display the chart inside the <div> element with id="piechart"
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart.draw(data, options);
+                    }
+                </script>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6 shadow-lg">
+                <canvas id="horizontalBar"></canvas>
+            </div>
+        </div>
+    </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="row ">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-8">
+            <h4 style="color: #4DA356"><strong>Select a topic to search reviews:</strong></h4>
+        </div>
+
+    </div>
+    <div class="row ">
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10 p-0">
+            <label class='btn btn-default'>room<input type='checkbox' name='language' class='badgebox'
+                    value="room"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>location<input type='checkbox' name='language' class='badgebox'
+                    value="location"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>spa\gym<input type='checkbox' name='language' class='badgebox'
+                    value="spa_gym"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>staff<input type='checkbox' name='language' class='badgebox'
+                    value="staff"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>cleanliness<input type='checkbox' name='language' class='badgebox'
+                    value="cleanliness"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>food<input type='checkbox' name='language' class='badgebox'
+                    value="food"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>bathroom<input type='checkbox' name='language' class='badgebox'
+                    value="bathroom"><span class='badge'>&check;</span></label>
+            <label class='btn btn-default'>service<input type='checkbox' name='language' class='badgebox'
+                    value="service"><span class='badge'>&check;</span></label>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    <div class="row">
+        <!-- <div class="col-sm-2"></div> -->
+        <div class="col-sm-12">
+            <div class="container" id="paginate">
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+    <script>
+        new Chart(document.getElementById("horizontalBar"), {
+            "type": "horizontalBar",
+            "data": {
+                "labels": ["Staff", "Cleanliness", "Service", "Location", "Room", "Bathroom", "Spa & Gym", "Food"],
+                "datasets": [{
+                    "label": "# Rating Out Of 5",
+                    "data": [{{ dictionary.staff_avarage }}, {{ dictionary.cleanliness_avarage }}, {{ dictionary.service_avarage }}, {{ dictionary.location_avarage }}, {{ dictionary.room_avarage }}, {{ dictionary.bathroom_avarage }}, {{ dictionary.gym_avarage }}, {{ dictionary.food_avarage }}],
+            "fill": false,
+            "backgroundColor": ['rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            "borderColor": ['rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            "borderWidth": 1
+                }]
+            },
+            "options": {
+                "scales": {
+                    "xAxes": [{
+                        "ticks": {
+                            "beginAtZero": true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    {% load staticfiles %}
+    <script src="{% static 'js/jquery.twbsPagination.min.js' %}"></script>
+</body>
+
+</html>
+<script>
+
+    var checkbox = document.getElementsByClassName('badgebox');
+    for (var i = 0; i < checkbox.length; i++) {
+        checkbox[i].addEventListener('change', function () {
+            temp = [];
+            $("input:checkbox[name=language]:checked").each(function () {
+                temp.push($(this).val());
+            });
+            var val = JSON.stringify(temp);
+            $.ajax({
+                type: "GET",
+                url: "{% url 'check_index'%}",
+                data: {
+                    opt: val
+                },
+                success: function (data) {
+
+                    if (data) {
+                        review_list = JSON.parse(data)
+                        totalItems = review_list['review_list'].length
+                        console.log(review_list['review_list'])
+                        totalPages = Math.ceil(totalItems / 10);
+                        console.log(totalPages)
+                        bla = review_list['review_list']
+                        rat = review_list['rating_list'];
+
+                        var myNode = document.getElementById('paginate');
+                        while (myNode.firstChild) {
+                            myNode.removeChild(myNode.firstChild);
+                        }
+                        for (var i = 0; i < totalPages; i++) {
+                            var indiv = document.createElement('div');
+                            indiv.className = 'jumbotron';
+                            indiv.className += ' page';
+                            indiv.id = `page${i + 1}`;
+                            document.getElementById('paginate').appendChild(indiv)
+
+                            if (i == (totalPages - 1)) {
+                                for (var j = 0; j < totalItems % 10; j++) {
+
+                                    var newchild = document.createElement('div');
+                                    newchild.innerHTML = '<div class="card"> <div class="card-body"> <div class="row"> <div class="col-sm-2"> <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>  </div> <div class="col-sm-10"> <p> <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">' + rat[j + i * 10] + '</span> </p> <div class="clearfix"></div> <p style="font-family: sans-serif;">' + bla[j + i * 10] + '</p> </div> </div> </div></div>'
+                                    indiv.appendChild(newchild);
+
+
+                                }
+                            } else {
+                                for (var j = 0; j < 10; j++) {
+
+                                    var newchild = document.createElement('div');
+                                    newchild.innerHTML = '<div class="card"> <div class="card-body"> <div class="row"> <div class="col-md-2"> <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/></p> </div> <div class="col-md-10"> <p>  <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">' + rat[j + i * 10] + '</span> </p> <div class="clearfix"></div> <p style="font-family: sans-serif;">' + bla[j + i * 10] + '</p> </div> </div> </div></div>'
+                                    indiv.appendChild(newchild);
+
+
+                                }
+                            }
+                        }
+                        var inita = document.createElement('ul');
+                        inita.className = "pagination-lg pull-right"
+                        inita.id = "pagination-demo"
+                        document.getElementById('paginate').appendChild(inita)
+
+                    } else {
+                        document.getElementById('X').value = "No student with this tag id found";
+                    }
+
+                    $('#pagination-demo').twbsPagination({
+
+                        totalPages: totalPages,
+
+                        startPage: 1,
+
+
+                        visiblePages: 5,
+
+                        initiateStartPageClick: true,
+
+
+                        href: false,
+
+
+                        hrefVariable: '{{number}}',
+
+
+                        first: 'First',
+                        prev: 'Previous',
+                        next: 'Next',
+                        last: 'Last',
+
+
+                        loop: false,
+
+
+                        onPageClick: function (event, page) {
+                            $('.page-active').removeClass('page-active');
+                            $('#page' + page).addClass('page-active');
+                        },
+
+
+                        paginationClass: 'pagination',
+                        nextClass: 'next',
+                        prevClass: 'prev',
+                        lastClass: 'last',
+                        firstClass: 'first',
+                        pageClass: 'page',
+                        activeClass: 'active',
+                        disabledClass: 'disabled'
+
+                    });
+                }
+            });
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+<!-- 
+// <form>
+//     <div class="container">
+//         <div class="row">
+
+//             <div class="col-sm-6">
+//                 <select class="js-example-basic-multiple custom-select" id="selec" name="states[]"
+//                     multiple="multiple">
+//                     <option value="staff">Staff</option>
+//                     <option value="cleanliness">Cleanliness</option>
+//                     <option value="bathroom">Bathroom</option>
+//                     <option value="location">Location</option>
+//                     <option value="room">Room</option>
+//                     <option value="spa_gym">Gym</option>
+//                     <option value="food">Food</option>
+//                     <option value="service">Service</option>
+//                 </select>
+//             </div>
+//         </div>
+//     </div>
+// </form> -->
+
+
+
+
+
+
+
+
+
+
+
+//
+<!-- <script>
+//     $(document).ready(function () {
+//         var totalItems, totalPages = 0;
+//         $("#selec").on('change', function () {
+//             var val = $('#selec').val();
+//             val = JSON.stringify(val);
+//             $.ajax({
+//                 type: "GET",
+//                 url: "{% url 'check_index'%}",
+//                 data: {
+//                     opt: val
+//                 },
+//                 success: function (data) {
+
+//                     if (data) {
+//                         review_list = JSON.parse(data)
+//                         totalItems = review_list['review_list'].length
+//                         console.log(review_list['review_list'])
+//                         totalPages = Math.ceil(totalItems / 10);
+//                         console.log(totalPages)
+//                         bla = review_list['review_list']
+//                         rat = review_list['rating_list'];
+                        
+//                         var myNode = document.getElementById('paginate');
+//                         while (myNode.firstChild) {
+//                             myNode.removeChild(myNode.firstChild);
+//                         }
+//                         for (var i = 0; i < totalPages; i++) {
+//                             var indiv = document.createElement('div');
+//                             indiv.className = 'jumbotron';
+//                             indiv.className += ' page';
+//                             indiv.id = `page${i + 1}`;
+//                             document.getElementById('paginate').appendChild(indiv)
+
+//                             if (i == (totalPages - 1)) {
+//                                 for (var j = 0; j < totalItems % 10; j++) {
+                                    
+//                                     var newchild = document.createElement('div');
+//                                     newchild.innerHTML = '<div class="card"> <div class="card-body"> <div class="row"> <div class="col-sm-2"> <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>  </div> <div class="col-sm-10"> <p> <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">' + rat[j + i * 10] + '</span> </p> <div class="clearfix"></div> <p style="font-family: sans-serif;">' + bla[j + i * 10] + '</p> </div> </div> </div></div>'
+//                                     indiv.appendChild(newchild);
+
+                                    
+//                                 }
+//                             } else {
+//                                 for (var j = 0; j < 10; j++) {
+                                    
+//                                     var newchild = document.createElement('div');
+//                                     newchild.innerHTML = '<div class="card"> <div class="card-body"> <div class="row"> <div class="col-md-2"> <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/></p> </div> <div class="col-md-10"> <p>  <span class="float-right" style="background-color: #4DA356;color: #ffffff;font-size:20px;border: 2px solid #414F47;border-radius:5px;padding: 2px">' + rat[j + i * 10] + '</span> </p> <div class="clearfix"></div> <p style="font-family: sans-serif;">' + bla[j + i * 10] + '</p> </div> </div> </div></div>'
+//                                     indiv.appendChild(newchild);
+
+                                    
+//                                 }
+//                             }
+//                         }
+//                         var inita = document.createElement('ul');
+//                         inita.className = "pagination-lg pull-right"
+//                         inita.id = "pagination-demo"
+//                         document.getElementById('paginate').appendChild(inita)
+
+//                     } else {
+//                         document.getElementById('X').value = "No student with this tag id found";
+//                     }
+
+//                     $('#pagination-demo').twbsPagination({
+
+//                         totalPages: totalPages,
+                        
+//                         startPage: 1,
+
+                        
+//                         visiblePages: 5,
+
+//                         initiateStartPageClick: true,
+
+                        
+//                         href: false,
+
+                        
+//                         hrefVariable: '{{number}}',
+
+                        
+//                         first: 'First',
+//                         prev: 'Previous',
+//                         next: 'Next',
+//                         last: 'Last',
+
+                        
+//                         loop: false,
+
+                        
+//                         onPageClick: function (event, page) {
+//                             $('.page-active').removeClass('page-active');
+//                             $('#page' + page).addClass('page-active');
+//                         },
+
+                        
+//                         paginationClass: 'pagination',
+//                         nextClass: 'next',
+//                         prevClass: 'prev',
+//                         lastClass: 'last',
+//                         firstClass: 'first',
+//                         pageClass: 'page',
+//                         activeClass: 'active',
+//                         disabledClass: 'disabled'
+
+//                     });
+//                 }
+//             });
+//             console.log(totalPages)
+
+//         });
+
+//     });
+// </script> -->
+
+
+
+
+<!-- <script type="text/javascript">
+    var $pagination = $('#pagination'),
+        totalRecords = 0,
+        records = [],
+        displayRecords = [],
+        recPerPage = 10,
+        page = 1,
+        totalPages = 0;
+    $.ajax({
+        url: "http://dummy.restapiexample.com/api/v1/employees",
+        async: true,
+        dataType: 'json',
+        success: function (data) {
+            records = data;
+            console.log(records);
+            totalRecords = records.length;
+            totalPages = Math.ceil(totalRecords / recPerPage);
+            apply_pagination();
+        }
+    });
+</script> -->
